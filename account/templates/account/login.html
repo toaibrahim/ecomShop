@@ -1,0 +1,48 @@
+{% extends 'main/base.html' %}    
+{% block title %}Home{% endblock %}  
+{% load static %}
+{% block body %}
+
+
+
+<!-- Login Start -->
+<div class="login">
+    <div class="container">
+        <div class="row">
+           
+            <div class="col-lg-12">
+                <div class="login-form">
+                    <div class="row">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="col-md-12">
+                                <label>Username</label>
+                                <input name="username" class="form-control" type="text" placeholder="username">
+                            </div>
+                            <div class="col-md-12">
+                                <label>Password</label>
+                                <input name="password" class="form-control" type="password" placeholder="Password">
+                            </div>
+                            <!--<div class="col-md-12">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="newaccount">
+                                    <label class="custom-control-label" for="newaccount">Keep me signed in</label>
+                                </div>
+                            </div>-->
+                            <div class="col-md-12">
+                                <button type="submit" class="btn">Login</button>
+                            </div>
+                            <br>
+                            <h5>Don't have an account please <a href="{% url 'account:register' %}">Register Here</a> </h5>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,71 @@
+
+
+
+{% extends 'main/base.html' %}    
+{% block title %}Home{% endblock %}  
+{% load static %}
+{% block body %}
+
+
+
+
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Products</a></li>
+            <li class="breadcrumb-item active">Wishlist</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Wishlist Start -->
+<div class="wishlist-page">
+    <div class="container-fluid">
+        <div class="wishlist-page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        {% if wishlist %}
+                        {% for wish in wishlist %}
+                        <table class="table table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Add to Cart</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody class="align-middle">
+                                <tr>
+                                    <td>
+                                        <div class="img">
+                                            <a href="{{wish.get_absolute_url}}"><img src="{{wish.item.image.url}}" alt="Image"></a>
+                                            <p>{{wish.item.title}}</p>
+                                        </div>
+                                    </td>
+                                    <td>{{wish.item.price}}</td>
+                                    <td><a href="{{wish.get_add_to_cart_url}}"><button class="btn-cart">Add to Cart</button></a></td>
+                                    <td><a href="{{ wish.get_remove_from_wishlist_url }}"><button><i class="fa fa-trash"></i></button></a></td>
+                                </tr>
+                                
+                                
+                            </tbody>
+                        </table>
+                        {% endfor %}
+                        {% else %}
+                        <p>No Item available on wishlist</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Wishlist End -->
+
+{% endblock %}

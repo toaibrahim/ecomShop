@@ -1,0 +1,233 @@
+{% extends 'main/base.html' %}    
+{% block title %}Blog-Details{% endblock %}  
+{% load static %}
+{% block body %}
+
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Products</a></li>
+            <li class="breadcrumb-item active">Product Detail</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Product Detail Start -->
+<div class="product-detail">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8 container">
+                
+                
+                <div class="product-detail-top">
+                    
+                    <div class="row align-items-center">
+                        
+                            <h2 style="text-align: center;margin-top: 40px;">{{blog.title}}</h2>
+                            <p style="text-align: center;margin-top: 10px;margin-bottom: 30px;">{{blog.time|timesince}}</p>
+                       
+                        
+                        <div class="col-md-8 container" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+
+                            <div class="product-slider-single normal-slider">
+                               
+                                <div style="width: 372px;height: 370px;">
+                                    <img src="{{blog.photo.url}}" alt="Product Image" style="width: 100%;height: 100%;object-fit: cover;">
+                                </div>
+                                
+                            </div>
+                            <div class="">
+                             
+                            </div>
+                            
+                          
+                        </div>
+                        <div class="container" style="width: 80%;text-align: center;margin-top: 40px;margin-top: 40px;">
+                           <p>{{blog.description}}</p>  
+                        </div>
+                        <div class="col-md-7">
+                            
+                            <!--<div class="product-content">
+                                
+                                <div class="title"><h2>This is a blog post</h2></div>
+                                
+                                
+                                <div class="quantity">
+                                    <h4>Quantity:</h4>
+                                    <div class="qty">
+                                       
+                                        {% for cart in cart_item %}
+                                        <a href="{{ object.get_remove_from_cart_url }}"><button class="btn-minus"><i class="fa fa-minus"></i></button></a>
+                                        <input type="text" value="{{cart.quantity}}">
+                                        <a href="{{ object.get_add_to_cart_url }}"><button class="btn-plus"><i class="fa fa-plus"></i></button></a>
+                                        {% endfor %}
+                                        
+                                    </div>
+                                </div>
+                                <div class="p-size">
+                                    <h4>Size:</h4>
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn">S</button>
+                                        <button type="button" class="btn">M</button>
+                                        <button type="button" class="btn">L</button>
+                                        <button type="button" class="btn">XL</button>
+                                    </div> 
+                                </div>
+                                <div class="p-color">
+                                    <h4>Color:</h4>
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn">White</button>
+                                        <button type="button" class="btn">Black</button>
+                                        <button type="button" class="btn">Blue</button>
+                                    </div> 
+                                </div>
+                                <div class="action">
+                                    <a class="btn" href="{{ object.get_add_to_wishlist_url }}"><i class="fa fa-shopping-cart"></i>Add to Wishlist</a>
+                                    <a class="btn" href="{{ object.get_add_to_cart_url }}"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                                    <a class="btn" href="#"><i class="fa fa-shopping-bag"></i>Buy Now</a>
+                                </div>
+                            </div>-->
+                            
+
+                        </div>
+                    </div>
+                    
+                </div>
+               
+                
+                <div class="row product-detail-bottom">
+                    <div class="col-lg-12">
+                        <ul class="nav nav-pills nav-justified">
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#reviews">Reviews 
+                                    {% if object.count_comment %}
+                                        ({{object.count_comment}})
+                                    {% endif %}
+
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                           
+                            
+                            <div id="reviews" class="container tab-pane fade">
+                                <div class="reviews-submitted">
+                                    {% if object.get_comments %}
+                                    {% for comment in object.comments.all %}
+                                    <div class="reviewer">{{comment.name}} - <span>{{comment.time|timesince}}</span></div>
+                                    <div class="ratting">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <p>
+                                        {{comment.comment}}
+                                    </p>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="reviews-submit">
+                                    <h4>Give your Review:</h4>
+                                    <!--<div class="ratting">
+                                        <a href=""><i class="far fa-star"></i></a>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>-->
+                                    <div class="row form">
+                                        <form action="" method="post">
+                                            {% csrf_token %}
+                                            {{reviewForm}}
+                                            
+                                            <div class="col-sm-12">
+                                                <button>Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <div class="section-header">
+                        <h1>Related Products</h1>
+                        
+                    </div>
+
+                    <div class="row align-items-center product-slider product-slider-3">
+                        {% for related in related_product %}
+                        <div class="col-lg-3">
+                            <div class="product-item">
+                                <div class="product-title">
+                                    <a href="#">{{related.title}}</a>
+                                    <div class="ratting">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="product-image">
+                                    <div style="width: 338px;height: 330px;">
+                                        <a href="{{related.get_absolute_url}}">
+                                            <img src="{{related.image.url}}" alt="Product Image" style="width: 100%;height: 100%;object-fit: cover;">
+                                        </a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href=""><i class="fa fa-cart-plus"></i></a>
+                                        <a href="#"><i class="fa fa-heart"></i></a>
+                                    </div>
+                                </div>
+                                <div class="product-price">
+                                    <h3><span>$</span>{{related.price}}</h3>
+                                    <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                        
+                        
+
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Side Bar Start -->
+            
+            <!-- Side Bar End -->
+        </div>
+    </div>
+</div>
+<!-- Product Detail End -->
+
+<!-- Brand Start -->
+<div class="brand">
+    <div class="container-fluid">
+        <div class="brand-slider">
+            <div class="brand-item"><img src="{% static 'img/brand-1.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-2.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-3.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-4.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-5.png' %}" alt=""></div>
+            <div class="brand-item"><img src="{% static 'img/brand-6.png' %}" alt=""></div>
+        </div>
+    </div>
+</div>
+<!-- Brand End -->
+
+
+
+{% endblock %}

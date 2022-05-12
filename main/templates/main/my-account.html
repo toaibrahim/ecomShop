@@ -1,0 +1,147 @@
+{% extends 'main/base.html' %}    
+{% block title %}Home{% endblock %}  
+{% load static %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Products</a></li>
+            <li class="breadcrumb-item active">My Account</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- My Account Start -->
+<div class="my-account">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="dashboard-nav" data-toggle="pill" href="#dashboard-tab" role="tab"><i class="fa fa-tachometer-alt"></i>Dashboard</a>
+                    <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i class="fa fa-shopping-bag"></i>Orders</a>
+                    <a class="nav-link" id="payment-nav" data-toggle="pill" href="#payment-tab" role="tab"><i class="fa fa-credit-card"></i>Payment Method</a>
+                    <a class="nav-link" id="address-nav" data-toggle="pill" href="#address-tab" role="tab"><i class="fa fa-map-marker-alt"></i>address</a>
+                    <a class="nav-link" id="account-nav" data-toggle="pill" href="#account-tab" role="tab"><i class="fa fa-user"></i>Account Details</a>
+                    <a class="nav-link" href="{% url 'account:logout' %}"><i class="fa fa-sign-out-alt"></i>Logout</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="dashboard-tab" role="tabpanel" aria-labelledby="dashboard-nav">
+                        <h4>Dashboard</h4>
+                        <p>
+                            A customer service dashboard is a modern solution to monitor all relevant customer KPIs in an easy and accessible way. It is relevant for customer support agents, team leader and C-level executives at the same time and helps to generate a 360-degree customer view as well as to improve the service team performance.
+
+                            Customer service managers, professionals, and agents have evolved into data-driven employees that need to monitor and evaluate customer service KPIs and generate insights regularly to improve the relationship with customers as well as ensure business growth. With the help of modern customer analytics software, the team will be able to perform basic and advanced analysis, learn from generated information on the spot, and create a modern customer service report focused on critical metrics that ensure accurate data analysis, and the best possible outcomes for your business.
+                        </p> 
+                    </div>
+                    <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                   
+                                    <tr>
+                                    
+                                        <td>{{order.id}}</td>
+                                        {% for ord in order.items.all %}
+                                            <td>{{ord}}</td>
+                                            <td>{{ord.item.price}}</td>
+                                        
+                                            <td>Approved</td>
+                                            <td><a href="{{ord.get_absolute_url}}"><button class="btn">View</button></a></td>
+                                        {% endfor %}
+                                        <td>{{order.start_date|timesince}}</td>
+
+                                    </tr>
+                                   
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="payment-tab" role="tabpanel" aria-labelledby="payment-nav">
+                        <h4>Payment Method</h4>
+                        <p>
+                            Cash on delivery, sometimes called collect on delivery or cash on demand, is the sale of goods by mail order where payment is made on delivery rather than in advance. If the goods are not paid for, they are returned to the retailer
+                        </p> 
+                    </div>
+                    <div class="tab-pane fade" id="address-tab" role="tabpanel" aria-labelledby="address-nav">
+                        <h4>Address</h4><br>
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <h5>Payment Address</h5>
+                                
+                                <p>{{address.address}}</p>
+                                <p>Mobile: {{address.mobile}}</p>
+                                <button class="btn">Edit Address</button>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Shipping Address</h5>
+                                
+                                <p>{{address.address}}</p>
+                                <p>Mobile: {{address.mobile}}</p>
+                                <button class="btn">Edit Address</button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
+                        <h4>Account Details</h4>
+                        <div class="row">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                            {{addressForm|crispy}}
+                            <div class="col-md-12">
+                                <button type="submit" class="btn">Update address</button>
+                                <br><br>
+                            </div>
+                        </form>
+                            
+                        </div>
+                        <!--<h4>Password change</h4>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input class="form-control" type="password" placeholder="Current Password">
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" placeholder="New Password">
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" placeholder="Confirm Password">
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn">Save Changes</button>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- My Account End -->
+
+
+
+
+{% endblock %}

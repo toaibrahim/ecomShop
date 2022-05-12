@@ -1,0 +1,124 @@
+{% extends 'main/base.html' %}    
+{% block title %}Home{% endblock %}  
+{% load static %}
+{% block body %}
+
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Products</a></li>
+            <li class="breadcrumb-item active">Cart</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Cart Start -->
+<div class="cart-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cart-page-inner">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            {% if object %}
+
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody class="align-middle">
+                                
+                                {% for order_item in object.items.all %}
+                                <tr>
+                                    <td>
+                                        <div class="img">
+                                            <a href="{{ order_item.get_absolute_url }}"><img src="{{order_item.item.image.url}}" alt="Image"></a>
+                                            <p>{{order_item.item.title}}</p>
+                                        </div>
+                                    </td>
+                                    {% if order_item.item.discount_price %}
+                                    <td>{{order_item.item.discount_price}}</td>
+                                    {% else %}
+                                    <td>{{order_item.item.price}}</td>
+                                    {% endif %}
+                                    <td>
+                                        <div class="qty">
+                                            <a href="{{ order_item.get_remove_from_cart_byone_url }}"><button class="btn-minus"><i class="fa fa-minus"></i></button></a>
+                                            <input type="text" value="{{order_item.quantity}}">
+                                            <a href="{{ order_item.get_add_to_cart_url }}"><button class="btn-plus"><i class="fa fa-plus"></i></button></a>
+                                            
+                                        </div>
+                                    </td>
+                                    <td>${{order_item.get_final_total}}</td>
+                                    <td> <a href="{{ order_item.get_remove_from_cart_url }}"><button><i class="fa fa-trash"></i></button></a> </td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <p>No item available on your cart</p>
+                                {% endif %}
+                            </tbody>
+                            
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="cart-page-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="coupon">
+                                <input type="text" placeholder="Coupon Code">
+                                <button>Apply Code</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="cart-summary">
+                                <div class="cart-content">
+                                    <h1>Cart Summary</h1>
+
+                                        <p>Sub Total<span>${{object.get_all_total}}</span></p>
+                                        <p>Shipping Cost<span>$1</span></p>
+                                    
+                                        <h2>Grand Total<span>${{object.get_all_total}}</span></h2>
+                                    
+                                </div>
+                                <div class="cart-btn">
+                                    {% if object %}
+                                        <a href="{% url 'main:checkout' %}"><button>Checkout</button></a>
+                                    {% endif %}
+                                    <a href="{% url 'main:product' %}"><button>Go Back</button></a>
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cart End -->
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+

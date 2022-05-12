@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}    
+{% block title %}404 Page not found{% endblock %}  
+{% load static %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <h3 style="color: red;">Page not Found</h3>
+    <p>This page is invalid of absent on the site please go back to the home page</p>
+    <a href="{% url 'main:index' %}"><button class="btn btn-primary">Go Back</button></a>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+
+
+{% endblock %}
